@@ -34,14 +34,9 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-<<<<<<< HEAD
           <h1 className="App-title">Bloc Chat</h1>
         </header>
         
-=======
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
->>>>>>> blocchat.roomlist.assgnmt
         <main>
           <div>
             <RoomList 
