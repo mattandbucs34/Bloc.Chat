@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
+import MessageList from './components/MessageList';
 
 
 // Initialize Firebase
@@ -17,19 +17,41 @@ var config = {
 firebase.initializeApp(config);
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activeRoom: ''
+    }
+  }
+
+
+  setActiveRoom(roomName) {
+    this.setState({ activeRoom: roomName});
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Bloc Chat</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        
         <main>
+          <div>
+            <RoomList 
+              firebase={firebase}
+              activeRoom={this.state.activeRoom}
+            />
+          </div>
+          <div>
+            <MessageList 
+              firebase={firebase}
+              activeRoom={this.state.activeRoom}
+            />
+          </div>
         </main>
-        <RoomList firebase={firebase} />
+        
       </div>
     );
   }
