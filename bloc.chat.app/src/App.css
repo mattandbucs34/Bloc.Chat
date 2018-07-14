@@ -9,7 +9,7 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
+  height: 75px;
   padding: 20px;
   color: white;
 }
@@ -25,4 +25,47 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.msg-table {
+  border-collapse: collapse;
+}
+
+tr, td {
+  padding: unset;
+}
+
+td.msg-block {
+  width: 100%;
+  vertical-align: top;
+}
+
+.roomlist {
+  text-align: left;
+  padding-top: 100px;
+  width: 200px;
+  background-color: lightgray;
+}
+
+.room-name, .active-room {
+  padding: 25px 15px 25px 15px;
+  border: solid black 1px;
+  border-radius: 10px;
+}
+
+.room-name {
+  background-color: rgba(34, 139, 34, .20);
+}
+
+.active-room {
+  background-color: rgba(34, 139, 34, .60);
+}
+
+.msg-room-name {
+  background-color: lightgreen;
+  height: 80px;
+  padding-top: 20px;
+  padding-left: 50px;
+  font-size: 2.5em;
+  text-align: left;
 }

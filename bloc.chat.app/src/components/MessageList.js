@@ -8,7 +8,7 @@ class MessageList extends Component {
         messages: []
       };
 
-      this.chatMsg = this.props.firebase.database().ref('messages');
+      this.chatMsg = this.props.firebase.database().ref('Messages');
   }
 
   componentDidMount() {
@@ -19,8 +19,25 @@ class MessageList extends Component {
     });
   }
 
+  showMsg(msg) {
+    if(msg.roomId == this.props.roomId)
+      return msg.content;
+  }
+
   render() {
-    return(<div></div>)
+    return(
+      <div>
+        <header className="msg-room-name">{this.props.activeRoom}</header>
+        <div >
+          {this.state.messages.map((msg,index) =>
+            <div key={index} >
+              {this.showMsg(msg)}
+            </div>
+            )
+          }   
+        </div>
+      </div>
+    )
   }
 }
 

@@ -21,13 +21,17 @@ class App extends Component {
     super(props);
 
     this.state = {
-      activeRoom: ''
+      activeRoom: '',
+      roomId: ''
     }
   }
 
-
   setActiveRoom(roomName) {
     this.setState({ activeRoom: roomName});
+  }
+
+  setActiveKey(activeKey) {
+    this.setState({ roomId: activeKey });
   }
 
   render() {
@@ -39,16 +43,28 @@ class App extends Component {
         
         <main>
           <div>
-            <RoomList 
-              firebase={firebase}
-              activeRoom={this.state.activeRoom}
-            />
-          </div>
-          <div>
-            <MessageList 
-              firebase={firebase}
-              activeRoom={this.state.activeRoom}
-            />
+            <table className='msg-table'>
+              <tbody>
+                <tr>
+                  <td>
+                    <RoomList 
+                      firebase={firebase}
+                      activeRoom={this.state.activeRoom}
+                      roomId={this.state.roomId}
+                      setActiveRoom={ (e) => this.setActiveRoom(e)}
+                      setActiveKey={ (e) => this.setActiveKey(e)}
+                      />
+                    </td>
+                    <td className='msg-block'>
+                      <MessageList 
+                        firebase={firebase}
+                        activeRoom={this.state.activeRoom}
+                        roomId={this.state.roomId}
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
           </div>
         </main>
         
