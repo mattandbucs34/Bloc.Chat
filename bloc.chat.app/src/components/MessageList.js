@@ -12,7 +12,7 @@ class MessageList extends Component {
   }
 
   componentDidMount() {
-    this.chatMsg.on('child_added', snapshot => {
+    this.chatMsg.orderByChild('sentAt').on('child_added', snapshot => {
       const msg = snapshot.val();
       msg.key = snapshot.key;
       this.setState({ messages: this.state.messages.concat(msg)});
