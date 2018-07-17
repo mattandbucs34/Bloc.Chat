@@ -5,7 +5,11 @@ class MessageList extends Component {
     super(props);
 
       this.state = {
-        messages: []
+        messages: [],
+        content: '',
+        roomId: null,
+        sentAt: null,
+        username: 'Guest'
       };
 
       this.chatMsg = this.props.firebase.database().ref('Messages');
@@ -19,9 +23,43 @@ class MessageList extends Component {
     });
   }
 
+  formatTime(msg) {
+    let time = new Date(msg.sentAt).toLocaleTimeString();
+    return time;
+  }
+
   showMsg(msg) {
     if(msg.roomId == this.props.roomId)
-      return msg.content;
+      return (
+        <div>
+          <div>{msg.content}</div>
+          <div>From: {msg.username} at {this.formatTime(msg)}</div>
+        </div>
+      )
+  }
+
+  setMsgState(e) {
+    this.setState({ content: e.target.value})
+  }
+
+  setUserId() {
+    if(this.props.userId === null)
+      return this.setState({ username: 'Guest'});
+    else
+      return this.setState({ username: this.props.userId.displayName});
+  }
+
+  sendMsg() {
+    this.chatMsg.push( {
+      content: this.state.content,
+      roomId: this.props.roomId,
+      sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
+      username: this.state.username
+      }).then( () => this.setState({ content: '',
+        roomId: null,
+        sentAt: null,
+        username: 'Guest'
+      }));
   }
 
   render() {
@@ -36,6 +74,8 @@ class MessageList extends Component {
             )
           }   
         </div>
+        <input type='text' value={this.state.content} onChange={this.setMsgState.bind(this)} />
+        <button type='submit' onClick={ (e) => { e.preventDefault(); this.sendMsg() } }>SEND</button>
       </div>
     )
   }

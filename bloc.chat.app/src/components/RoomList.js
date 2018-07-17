@@ -21,7 +21,6 @@ class RoomList extends Component {
   }
 
   createRoomName(e) {
-    console.log(e.target.value);
     this.setState({ newRoomName: e.target.value})
   }
 

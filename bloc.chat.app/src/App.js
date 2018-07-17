@@ -22,8 +22,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      activeRoom: '',
-      roomId: '',
+      activeRoom: 'Room 1',
+      roomId: 1,
       userId: ''
     }
   }
@@ -71,6 +71,7 @@ class App extends Component {
                         firebase={firebase}
                         activeRoom={this.state.activeRoom}
                         roomId={this.state.roomId}
+                        userId={this.state.userId}
                       />
                     </td>
                   </tr>
