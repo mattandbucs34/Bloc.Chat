@@ -24,7 +24,7 @@ class App extends Component {
     this.state = {
       activeRoom: 'Room 1',
       roomId: 1,
-      userId: ''
+      userId: 'Guest'
     }
   }
 

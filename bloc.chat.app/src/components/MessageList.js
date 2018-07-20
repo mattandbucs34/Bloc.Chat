@@ -43,10 +43,11 @@ class MessageList extends Component {
   }
 
   setUserId() {
-    if(this.props.userId === null)
-      return this.setState({ username: 'Guest'});
-    else
-      return this.setState({ username: this.props.userId.displayName});
+    if(this.props.userId === null){
+      return 'Guest';
+    }else {
+      return this.props.userId.displayName;
+    }
   }
 
   sendMsg() {
@@ -54,7 +55,7 @@ class MessageList extends Component {
       content: this.state.content,
       roomId: this.props.roomId,
       sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
-      username: this.state.username
+      username: this.setUserId()
       }).then( () => this.setState({ content: '',
         roomId: null,
         sentAt: null,
