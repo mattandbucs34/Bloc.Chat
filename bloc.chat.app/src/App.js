@@ -44,7 +44,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="header">
-          <h1 className="App-title">Bloc Chat</h1>
+          <h1 className="App-title">MattyChat</h1>
         </header>
         <div className='row'>
           <div className='col-3 menu'>
