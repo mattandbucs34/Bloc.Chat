@@ -5,6 +5,7 @@
   "dependencies": {
     "ajv": "^6.9.2",
     "create-react-app": "^2.1.5",
+    "extend": "^3.0.2",
     "firebase": "^5.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
