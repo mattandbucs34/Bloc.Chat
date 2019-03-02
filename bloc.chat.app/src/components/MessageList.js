@@ -16,67 +16,60 @@ class MessageList extends Component {
   }
 
   componentDidMount() {
-    this.chatMsg.orderByChild('sentAt').on('child_added', snapshot => {
+    this.chatMsg.orderByChild('roomId').equalTo(this.props.activeRoom).on('child_added', snapshot => {
       const msg = snapshot.val();
       msg.key = snapshot.key;
       this.setState({ messages: this.state.messages.concat(msg)});
     });
   }
 
-  formatTime(msg) {
-    let time = new Date(msg.sentAt).toLocaleTimeString();
-    return time;
-  }
-
-  showMsg(msg) {
-    if(msg.roomId == this.props.roomId)
-      return (
-        <div>
-          <div>{msg.content}</div>
-          <div>From: {msg.username} at {this.formatTime(msg)}</div>
-        </div>
-      )
-  }
-
-  setMsgState(e) {
-    this.setState({ content: e.target.value})
-  }
-
-  setUserId() {
-    if(this.props.userId === null){
-      return 'Guest';
-    }else {
-      return this.props.userId.displayName;
+  componentDidUpdate(prevProps) {
+    if(this.props.activeRoom !== prevProps.activeRoom) {
+      this.chatMsg.orderByChild('roomId').equalTo(this.props.activeRoom).on('child_added', snapshot => {
+      const msg = snapshot.val();
+      msg.key = snapshot.key;
+      this.setState({ messages: this.state.messages.concat(msg)});
+      });
     }
   }
 
-  sendMsg() {
-    this.chatMsg.push( {
-      content: this.state.content,
-      roomId: this.props.roomId,
-      sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
-      username: this.setUserId()
-      }).then( () => this.setState({ content: '',
-        roomId: null,
-        sentAt: null,
-        username: 'Guest'
-      }));
+
+  formatTime(msg) {
+    let time = new Date(msg.sentAt).toLocaleString();
+    return time;
+  }
+
+  setMsgClass(msg) {
+    if(msg.username === this.props.userId)
+      return 'user-msg';
+    else 
+      return 'msg-row';
+  }
+
+  showMsg(msg, index) {
+    if(msg.roomId === this.props.activeRoom )
+      return (
+        <div key={index} >
+          <div className={this.setMsgClass(msg)}>
+            <div className='msg-text'>{msg.content}</div>
+            <div className='msg-sender'>From: {msg.username} at {this.formatTime(msg)}</div>
+          </div>
+        </div>
+      )
   }
 
   render() {
     return(
       <div>
-        <header className="msg-room-name">{this.props.activeRoom}</header>
-        <div >
-          {this.state.messages.map((msg,index) =>
-            <div key={index} >
-              {this.showMsg(msg)}
-            </div>
-            )
-          }   
+        <div className='room-header'>
+            <header className="msg-room-name">{this.props.activeRoom}</header>
         </div>
-        <input type='text' value={this.state.content} onChange={this.setMsgState.bind(this)} />
-        <button type='submit' onClick={ (e) => { e.preventDefault(); this.sendMsg() } }>SEND</button>
+        <div className='msg-container'>
+          {this.state.messages.map((msg,index) =>
+            this.showMsg(msg,index)
+            )
+          }
+        </div>
       </div>
     )
   }

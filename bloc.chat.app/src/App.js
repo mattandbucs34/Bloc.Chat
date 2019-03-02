@@ -3,7 +3,8 @@ import './App.css';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
-import User from './components/User'; 
+import User from './components/User';
+import SendMessage from './components/SendMessage';
 
 
 // Initialize Firebase
@@ -23,7 +24,6 @@ class App extends Component {
 
     this.state = {
       activeRoom: 'Room 1',
-      roomId: 1,
       userId: 'Guest'
     }
   }
@@ -43,43 +43,39 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+        <header className="header">
           <h1 className="App-title">Bloc Chat</h1>
         </header>
-        
-        <main>
-          <div>
-            <table className='msg-table'>
-              <tbody>
-                <tr>
-                  <td>
-                  <User
-                    firebase={firebase}
-                    userId={this.state.userId}
-                    setUser={(e) => this.setUser(e)}
-                  />
-                    <RoomList 
-                      firebase={firebase}
-                      activeRoom={this.state.activeRoom}
-                      roomId={this.state.roomId}
-                      setActiveRoom={ (e) => this.setActiveRoom(e)}
-                      setActiveKey={ (e) => this.setActiveKey(e)}
-                      />
-                    </td>
-                    <td className='msg-block'>
-                      <MessageList 
-                        firebase={firebase}
-                        activeRoom={this.state.activeRoom}
-                        roomId={this.state.roomId}
-                        userId={this.state.userId}
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+        <div className='row'>
+          <div className='col-3 menu'>
+            <User
+              firebase={firebase}
+              userId={this.state.userId}
+              setUser={(e) => this.setUser(e)}
+            />
+            <RoomList 
+              firebase={firebase}
+              activeRoom={this.state.activeRoom}
+              roomId={this.state.roomId}
+              setActiveRoom={ (e) => this.setActiveRoom(e)}
+              setActiveKey={ (e) => this.setActiveKey(e)}
+            />
           </div>
-        </main>
-        
+          <div className='col-8'>
+            <MessageList 
+              firebase={firebase}
+              activeRoom={this.state.activeRoom}
+              roomId={this.state.roomId}
+              userId={this.state.userId}
+            />
+            <SendMessage
+              firebase={firebase}
+              activeRoom={this.state.activeRoom}
+              roomId={this.state.roomId}
+              userId={this.state.userId}
+            />
+          </div>
+        </div>
       </div>
     );
   }

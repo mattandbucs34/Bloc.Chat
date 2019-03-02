@@ -24,16 +24,27 @@ class User extends Component {
       return userId.displayName; 
   }
 
+  showSignBtn(userId) {
+    if(userId === null) {
+      return (
+        <div>
+          <button onClick={ () => this.signIn()} className='btn'>Sign In</button>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <button onClick={ () => this.signOut()} className='btn'>Sign Out</button>
+        </div>
+      );
+    }
+  }
+
   render () {
     return(
-      <div>
-        {this.showUser(this.props.userId)}
-        <div>
-          <button onClick={ () => this.signIn()}>Sign In</button>
-        </div>
-        <div>
-          <button onClick={ () => this.signOut()}>Sign Out</button>
-        </div>
+      <div className='user-div'>
+        <p className='welcome'>Welcome {this.showUser(this.props.userId)}!</p>
+        <div>{this.showSignBtn(this.props.userId)}</div>
       </div>
     )
   }
